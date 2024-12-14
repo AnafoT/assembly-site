@@ -10,8 +10,13 @@ export const SandBox = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <CodeEditor setOutput={setOutput} />
-      <CodeOutput output={output} />
+      {/* 
+        justify start
+      */}
+      <div className="flex gap-4 items-start w-full ">
+        <CodeEditor setOutput={setOutput} />
+        <CodeOutput output={output} />
+      </div>
     </QueryClientProvider>
   )
 }

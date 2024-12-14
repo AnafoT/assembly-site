@@ -1,14 +1,20 @@
-import { getCalleeSavedRegistersSuggestions, getCallerSavedRegistersSuggestions, getDirectivesSuggestions, getOperandSuggestions } from "@/app/lsp/completion"
+import {
+  getCalleeSavedRegistersSuggestions,
+  getCallerSavedRegistersSuggestions,
+  getDirectivesSuggestions,
+  getOperandSuggestions,
+} from "@/lib/completion"
 import { Button } from "@/components/ui/button"
 import { Editor, useMonaco } from "@monaco-editor/react"
 import Axios from "axios"
 import { useEffect, useState } from "react"
+import { getExampleProgram } from "@/lib/utils"
 
 
 
 
-  // registers callee-saved
-  /*
+// registers callee-saved
+/*
   rbx
   rbp
   rsp
@@ -17,9 +23,9 @@ import { useEffect, useState } from "react"
   r14
   r15
   */
-  
-  // Assembler directives
-  /*
+
+// Assembler directives
+/*
     .bss
     .data
     .text
@@ -29,16 +35,12 @@ import { useEffect, useState } from "react"
     .fill .zero .skip
     .equ
   */
-  
-  
 
 export const getSuggestions = (monaco, range) => {
-
   const allSuggestions = [
     getOperandSuggestions(monaco, range),
     getCallerSavedRegistersSuggestions(monaco, range),
     getCalleeSavedRegistersSuggestions(monaco, range),
-    getDirectivesSuggestions(monaco, range)
   ]
 
   return allSuggestions.flat()
@@ -49,8 +51,6 @@ export const CodeEditor = ({ setOutput }) => {
 
   const monaco = useMonaco()
 
-  
-
   useEffect(() => {
     // Register a new language
     if (!monaco) return
@@ -59,57 +59,72 @@ export const CodeEditor = ({ setOutput }) => {
     monaco?.languages.registerCompletionItemProvider("customLang", {
       provideCompletionItems: (model, position) => {
         var word = model.getWordUntilPosition(position)
-        console.log(position, word)
         const range = {
-          startLineNumber: 1,
-          startColumn: 1,
-          endLineNumber: word.startColumn,
+          startLineNumber: position.lineNumber,
+          endLineNumber: position.lineNumber,
+          startColumn: word.startColumn,
           endColumn: word.endColumn,
-        };
-        return {
-          suggestions: getSuggestions(monaco, range)
         }
-      }
+        return {
+          suggestions: getSuggestions(monaco, range),
+        }
+      },
+    })
+
+    monaco?.languages.registerCompletionItemProvider("customLang", {
+      triggerCharacters: ["."],
+      provideCompletionItems: (model, position) => {
+        const textUntilPosition = model.getValueInRange({
+          startLineNumber: position.lineNumber,
+          startColumn: 1,
+          endLineNumber: position.lineNumber,
+          endColumn: position.column,
+        })
+
+        if (!textUntilPosition.endsWith(".")) {
+          return {
+            suggestions: [],
+          }
+        }
+
+      
+        var word = model.getWordUntilPosition(position)
+        const range = {
+          startLineNumber: position.lineNumber,
+          endLineNumber: position.lineNumber,
+          startColumn: word.startColumn,
+          endColumn: word.endColumn,
+        }
+        return {
+          suggestions: getDirectivesSuggestions(monaco, range),
+        }
+      },
     })
   }, [monaco])
-
-
 
   const handleSubmit = async () => {
     const res = await Axios.post("/api/judge0", { source_code: text })
     setOutput(res.data)
   }
 
-
-
-
-
-
-
   return (
-    // <div className="flex flex-col items-center gap-4">
-    //   <h1 className="text-4xl sm:text-5xl font-bold text-center">Welcome to Iosup's playground!</h1>
-    //   <p className="text-lg text-center">Get started by entering your assembly program below</p>
-    //   <div>
-    //     <textarea
-    //       className="w-full h-96 p-4 bg-[#f2f2f2] dark:bg-[#1a1a1a] text-black dark:text-white rounded-lg resize-none"
-    //       defaultValue={text}
-    //       onChange={(e) => setText(e.target.value)}
-    //     ></textarea>
-    //   </div>
-    //   <Button onClick={handleSubmit}>Submit program</Button>
-    // </div>
-
     <div>
       <Editor
-        height="90vh"
-        width="50vw"
+        height="80vh"
+        width="40vw"
         defaultLanguage="customLang"
-        defaultValue={text}
+        value={text}
         onChange={(value) => setText(value)}
         theme="vs-dark"
-
       />
+      <div className="flex flex-row gap-2">
+      <Button onClick={handleSubmit} className="mt-2">
+        Submit program
+      </Button>
+      <Button onClick={() => setText(getExampleProgram())} className="mt-2">
+        Load example code
+      </Button>
+      </div>
     </div>
   )
 }

@@ -231,78 +231,84 @@ export const getCalleeSavedRegistersSuggestions = (monaco, range) => {
 
 export const getDirectivesSuggestions = (monaco, range) => {
   
+
+  // for the suggestions, require them to only be suggested when the user types a dot
+
   const suggestions = [
     {
       label: ".bss",
-      insertText: '.bss',
+      insertText: 'bss',
       documentation: "Declare uninitialized data",
+    
     },
     {
       label: ".data",
-      insertText: '.data',
+      insertText: 'data',
       documentation: "Declare initialized data",
     },
     {
       label: ".text",
-      insertText: '.text',
+      insertText: 'text',
       documentation: "Declare code",
     },
     {
       label: ".global",
-      insertText: '.global',
+      insertText: 'global',
       documentation: "Declare a global symbol",
     },
     {
       label: ".byte",
-      insertText: '.byte',
+      insertText: 'byte',
       documentation: "Declare a byte",
     },
     {
       label: ".word",
-      insertText: '.word',
+      insertText: 'word',
       documentation: "Declare a word",
     },
     {
       label: ".long",
-      insertText: '.long',
+      insertText: 'long',
       documentation: "Declare a long",
     },
     {
       label: ".quad",
-      insertText: '.quad',
+      insertText: 'quad',
       documentation: "Declare a quad",
     },
     {
       label: ".ascii",
-      insertText: '.ascii',
+      insertText: 'ascii',
       documentation: "Declare an ascii string",
     },
     {
       label: ".asciz",
-      insertText: '.asciz',
+      insertText: 'asciz',
       documentation: "Declare an ascii string with null terminator",
     },
     {
       label: ".fill",
-      insertText: '.fill',
+      insertText: 'fill',
       documentation: "Fill space with a value",
     },
     {
       label: ".zero",
-      insertText: '.zero',
+      insertText: 'zero',
       documentation: "Fill space with zeros",
     },
     {
       label: ".skip",
-      insertText: '.skip',
+      insertText: 'skip',
       documentation: "Skip space",
     },
     {
       label: ".equ",
-      insertText: '.equ',
+      insertText: 'equ',
       documentation: "Define a constant",
     },
   ]
+
+  // only return the suggestions if the user types a dot
   return suggestions.map(suggestion => ({
     label: suggestion.label,
     kind: monaco.languages.CompletionItemKind.Keyword,
