@@ -1,3 +1,31 @@
+export const LANGUAGE_KEYWORDS = {
+  // Operand Suggestions
+
+  operands: [
+    "mov", "movz", "push", "pop", "lea", "call", "syscall", "ret",
+    "jmp", "je", "jne", "leave", "add", "sub", "inc", "mul", "div",
+    "cmp", "xor", "or", "and",
+  ],
+
+
+  // Caller-Saved Registers
+  caller_saved_registers: [
+    "rax", "rdi", "rsi", "rdx", "rcx", "r8", "r9", "r10", "r11",
+  ],
+
+  // Callee-Saved Registers
+  callee_saved_registers: [
+    "rbp", "rsp", "rbx", "r12", "r13", "r14", "r15",
+  ],
+
+  // Directive Suggestions
+  directives: [
+    ".bss", ".data", ".text", ".global", ".byte", ".word", ".long",
+    ".quad", ".ascii", ".asciz", ".fill", ".zero", ".skip", ".equ",
+  ],
+};
+
+
 export const getOperandSuggestions = (monaco, range) => {
   const suggestions = [
     {
@@ -230,7 +258,7 @@ export const getCalleeSavedRegistersSuggestions = (monaco, range) => {
 }
 
 export const getDirectivesSuggestions = (monaco, range) => {
-  
+
 
   // for the suggestions, require them to only be suggested when the user types a dot
 
@@ -239,7 +267,7 @@ export const getDirectivesSuggestions = (monaco, range) => {
       label: ".bss",
       insertText: 'bss',
       documentation: "Declare uninitialized data",
-    
+
     },
     {
       label: ".data",
@@ -318,3 +346,4 @@ export const getDirectivesSuggestions = (monaco, range) => {
     range: range,
   }))
 }
+

@@ -5,6 +5,10 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
+export const JUDGE0_CONSTANTS = {
+  assembly_language_id: 100,
+  submission_params: "?base64_encoded=false&fields=status,stdout,stderr,language_id,compile_output&wait=true"
+}
 
 export function getExampleProgram() {
 
