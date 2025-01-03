@@ -5,6 +5,10 @@ import { JUDGE0_CONSTANTS } from "@/lib/utils";
 export async function GET() {
   console.info("Calling endpint GET /submissions")
 
+  if (process.env.STAGE !== "dev") {
+    return NextResponse.json({ authorized: false });
+  }
+
   const res = await _Axios.get("/submissions")
 
   if (res.status !== 200) {
@@ -42,6 +46,10 @@ export async function POST(request) {
 
 export async function DELETE() {
   console.info("Calling endpoint DELETE /submissions")
+
+  if (process.env.STAGE !== "dev") {
+    return NextResponse.json({ success: false })
+  }
 
   const res = await _Axios.get("/submissions")
 

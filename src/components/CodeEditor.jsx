@@ -174,25 +174,28 @@ export const CodeEditor = ({ setOutput }) => {
           Load example code
         </Button>
 
-        <Button onClick={async () => {
-          const res = await Axios.post("/api/judge0/authorize")
-          console.info("Is authorized:", res.data.authorized)
-        }} className="mt-2">
-          Authorize
-        </Button>
+        {process.env.STAGE === "dev" ?
+          (<>
+            <Button onClick={async () => {
+              const res = await Axios.post("/api/judge0/authorize")
+              console.info("Is authorized:", res.data.authorized)
+            }} className="mt-2">
+              Authorize
+            </Button>
 
-        <Button onClick={async () => {
-          const submissions = await Axios.get("/api/judge0/submissions")
-          console.info("Submissions:", submissions.data)
-        }}>
-          Get submissions
-        </Button>
+            <Button onClick={async () => {
+              const submissions = await Axios.get("/api/judge0/submissions")
+              console.info("Submissions:", submissions.data)
+            }}>
+              Get submissions
+            </Button>
 
-        <Button onClick={async () => {
-          await Axios.delete("/api/judge0/submissions")
-        }}>
-          Delete submissions
-        </Button>
+            <Button onClick={async () => {
+              await Axios.delete("/api/judge0/submissions")
+            }}>
+
+            </Button>
+          </>) : null}
 
       </div>
     </div>
