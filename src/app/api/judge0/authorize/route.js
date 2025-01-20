@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 export async function POST() {
   console.log("Calling /authorize endpoint")
 
-  if (process.env.STAGE !== "dev") {
+  if (process.env.STAGE === "prod") {
     return NextResponse.json({ authorized: false })
   }
 

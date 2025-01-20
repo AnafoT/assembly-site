@@ -5,7 +5,7 @@ import { JUDGE0_CONSTANTS } from "@/lib/utils";
 export async function GET() {
   console.info("Calling endpint GET /submissions")
 
-  if (process.env.STAGE !== "dev") {
+  if (process.env.STAGE === "prod") {
     return NextResponse.json({ authorized: false });
   }
 
@@ -32,6 +32,8 @@ export async function POST(request) {
   const res = await _Axios.post(
     "/submissions" + JUDGE0_CONSTANTS.submission_params,
     source_body,
+    // Set timeout to 5 seconds
+    { timeout: 5000 }
   )
 
   if (res.status >= 200 && res.status < 300) {
@@ -47,7 +49,7 @@ export async function POST(request) {
 export async function DELETE() {
   console.info("Calling endpoint DELETE /submissions")
 
-  if (process.env.STAGE !== "dev") {
+  if (process.env.STAGE === "prod") {
     return NextResponse.json({ success: false })
   }
 
