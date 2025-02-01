@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 export const JUDGE0_CONSTANTS = {
@@ -30,4 +30,16 @@ main:
     call    exit
 `
   return text
+}
+
+export function getChapters() {
+  const chapterTitles = [
+    "Prerequisites",
+    "Introduction to Assembly",
+    "Registers",
+    "Calling Conventions",
+    "Instruction Set I",
+    "Instruction Set II",
+  ]
+  return chapterTitles
 }

@@ -1,0 +1,5 @@
+
+export function useMDXComponents() {
+  return {
+  };
+}

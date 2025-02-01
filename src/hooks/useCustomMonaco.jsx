@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import {
   getCalleeSavedRegistersSuggestions,
   getCallerSavedRegistersSuggestions,
@@ -5,14 +6,9 @@ import {
   getOperandSuggestions,
   LANGUAGE_KEYWORDS,
 } from "@/lib/completion"
-import { Button } from "@/components/ui/button"
-import { Editor, useMonaco } from "@monaco-editor/react"
-import Axios from "axios"
-import { useEffect, useState } from "react"
-import { getExampleProgram } from "@/lib/utils"
+import { useMonaco } from "@monaco-editor/react"
 
-
-export const getSuggestions = (monaco, range) => {
+const getSuggestions = (monaco, range) => {
   const allSuggestions = [
     getOperandSuggestions(monaco, range),
     getCallerSavedRegistersSuggestions(monaco, range),
@@ -22,11 +18,10 @@ export const getSuggestions = (monaco, range) => {
   return allSuggestions.flat()
 }
 
-export const CodeEditor = ({ setOutput }) => {
+export const useCustomMonaco = () => {
 
-  const [text, setText] = useState("")
   const monaco = useMonaco()
-
+  const [customMonaco, setCustomMonaco] = useState(null)
 
   useEffect(() => {
     // Register a new language
@@ -74,9 +69,9 @@ export const CodeEditor = ({ setOutput }) => {
         string: [
           [/[^\\"]+/, "string"],
           [/"/, "string", "@pop"],
-        ],
+        ]
       }
-    });
+    })
 
 
     // Define the theme colors
@@ -96,7 +91,7 @@ export const CodeEditor = ({ setOutput }) => {
       colors: {
         "editor.foreground": "FFFFFF",
       }
-    });
+    })
 
     monaco.editor.setTheme("assemblyTheme") // TODO: This should be set in the options of the Editor component, but only works when typing in the editor
 
@@ -144,60 +139,8 @@ export const CodeEditor = ({ setOutput }) => {
       },
     })
 
-    const all_keywords = LANGUAGE_KEYWORDS
+    setCustomMonaco(monaco)
   }, [monaco])
 
-  const handleSubmit = async () => {
-    const res = await Axios.post("/api/judge0/submissions", { source_code: text })
-    setOutput(res.data)
-  }
-
-  return (
-    <div>
-      <Editor
-        height="80vh"
-        width="40vw"
-        defaultLanguage="customLang"
-        value={text}
-        onChange={(value) => setText(value)}
-        options={{
-          minimap: { enabled: false },
-        }}
-      />
-      <div className="flex flex-row gap-2">
-
-        <Button onClick={handleSubmit} className="mt-2">
-          Submit program
-        </Button>
-
-        <Button onClick={() => setText(getExampleProgram())} className="mt-2">
-          Load example code
-        </Button>
-
-        {process.env.STAGE === "dev" ?
-          (<>
-            <Button onClick={async () => {
-              const res = await Axios.post("/api/judge0/authorize")
-              console.info("Is authorized:", res.data.authorized)
-            }} className="mt-2">
-              Authorize
-            </Button>
-
-            <Button onClick={async () => {
-              const submissions = await Axios.get("/api/judge0/submissions")
-              console.info("Submissions:", submissions.data)
-            }}>
-              Get submissions
-            </Button>
-
-            <Button onClick={async () => {
-              await Axios.delete("/api/judge0/submissions")
-            }}>
-
-            </Button>
-          </>) : null}
-
-      </div>
-    </div>
-  )
+  return customMonaco
 }

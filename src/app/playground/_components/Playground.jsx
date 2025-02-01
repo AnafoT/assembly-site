@@ -1,14 +1,14 @@
 "use client"
-import { CodeOutput } from "@/components/CodeOutput"
-import { CodeEditor } from "@/components/CodeEditor"
+import { CodeOutput } from "./CodeOutput"
+import { CodeEditor } from "./CodeEditor"
 import { useState } from "react"
 
-export const SandBox = () => {
+export const Playground = () => {
   const [output, setOutput] = useState("")
 
   return (
     <div className="flex gap-4 items-start w-full ">
-      <CodeEditor setOutput={setOutput} />
+      <CodeEditor width="40vw" height="80vh" setOutput={setOutput} />
       <CodeOutput output={output} />
     </div>
   )
