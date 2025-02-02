@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import { BookOpen, ChevronRight, Terminal } from "lucide-react"
 import Link from "next/link"
-import { Terminal, BookOpen, ChevronRight } from "lucide-react"
 
 export default function AssemblyGuide() {
   return (

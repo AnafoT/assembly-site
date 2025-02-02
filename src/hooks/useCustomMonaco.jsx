@@ -21,11 +21,12 @@ const getSuggestions = (monaco, range) => {
 export const useCustomMonaco = () => {
 
   const monaco = useMonaco()
-  const [customMonaco, setCustomMonaco] = useState(null)
 
   useEffect(() => {
     // Register a new language
     if (!monaco) return
+    if (monaco.languages.getLanguages().some((lang) => lang.id === "customLang")) return
+
 
     monaco.languages.register({ id: "customLang" })
 
@@ -93,7 +94,7 @@ export const useCustomMonaco = () => {
       }
     })
 
-    monaco.editor.setTheme("assemblyTheme") // TODO: This should be set in the options of the Editor component, but only works when typing in the editor
+    monaco.editor.setTheme("assemblyTheme") // NOTE: Needs to be here to set theme explicitly for initial render
 
     monaco.languages.registerCompletionItemProvider("customLang", {
       provideCompletionItems: (model, position) => {
@@ -139,8 +140,7 @@ export const useCustomMonaco = () => {
       },
     })
 
-    setCustomMonaco(monaco)
   }, [monaco])
 
-  return customMonaco
+  return monaco
 }

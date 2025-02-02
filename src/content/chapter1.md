@@ -22,5 +22,3 @@ Modify the program to output your own message. Make sure to:
 2. Update only the string in the data section  
 3. Maintain proper string termination  
 
-export default({ children }) => <div className="prose">{children}</div>
-

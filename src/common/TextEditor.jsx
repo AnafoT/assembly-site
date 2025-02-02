@@ -6,7 +6,7 @@ import { getExampleProgram } from "@/lib/utils"
 import { useCustomMonaco } from "@/hooks/useCustomMonaco"
 import _Axios from "@/lib/axios"
 
-export const CodeEditor = ({ width = "500px", height = "500px", setOutput }) => {
+export const TextEditor = ({ width = "500px", height = "500px", setOutput }) => {
 
   const [text, setText] = useState("")
   const monaco = useCustomMonaco() // Initializes custom editor settings
@@ -16,20 +16,20 @@ export const CodeEditor = ({ width = "500px", height = "500px", setOutput }) => 
     setOutput(res.data)
   }
 
-
-
   return (
-    <div>
+    <div className="p-1">
 
       <Editor
         width={width}
         height={height}
         defaultLanguage="customLang"
+        theme="assemblyTheme"
         value={text}
         onChange={(value) => setText(value)}
         options={{
           minimap: { enabled: false },
         }}
+
       />
 
       <div className="flex flex-row gap-2 items-center p-4">
