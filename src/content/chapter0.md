@@ -15,7 +15,7 @@ See the main differences below:
 - You will run into segfaults alot :D // TODO add link
 - Barebones instructions. I.e. if statements have to be more explcitly handled
 - The need to allocate memory on the *stack* to store data/variables
-- The usage of non-named stack/named registers for storing data instead of typical (named) variables:
+- The usage of non-named stack/named registers(storage locations in the CPU) for storing data instead of typical (named) variables:
     ```
         mov $10, %rax // Register use
         mov $5, -8(%rbp) // Stack use
@@ -37,11 +37,13 @@ See the main differences below:
 
     instead of...
 
-    int main() ....
+    int main() {
         int result = func1(a);
-    int func1(int a)...
+    }
+    int func1(int a) {
         return a + 1;
+    }
     ```
 - Floating points arithmetic needs some special registers/instructions which is very annoying, try to avoid this
-- "Lacking" debugger support, especially when it comes to IDEs like VScode and many others. See *setup local development* for my recommended setup. //TODO add link
+- "Lacking" IDE support, i.e. debugging/documentation. See *setup local development* for my recommended setup. //TODO add link
 - And many other things that you'll find out
