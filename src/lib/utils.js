@@ -43,3 +43,7 @@ export function getChapters() {
   ]
   return chapterTitles
 }
+
+export function getRegularChapters() {
+  return [0]
+}
