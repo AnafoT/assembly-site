@@ -12,9 +12,9 @@ For a language to be **high** is dependant on the perspective, however since ass
 
 See the main differences below:
 
-- You will run into segfaults alot :D // TODO add link
-- Barebones instructions. I.e. if statements have to be more explcitly handled
-- The need to allocate memory on the *stack* to store data/variables
+- You will run into segfaults alot :D. // TODO add link
+- Barebones instructions. I.e. if statements have to be more explcitly handled.
+- The need to allocate memory on the *stack* to store data/variables.
 - The usage of non-named stack/named registers(storage locations in the CPU) for storing data instead of typical (named) variables:
     ```
         mov $10, %rax // Register use
@@ -25,7 +25,7 @@ See the main differences below:
         int a = 10;
         int b = 5;
     ```
-- Labels instead of function params/signatures (see: calling convention)
+- Labels instead of function params/signatures (see: calling convention):
     ```
     main:
         mov $2, %rax
@@ -44,6 +44,6 @@ See the main differences below:
         return a + 1;
     }
     ```
-- Floating points arithmetic needs some special registers/instructions which is very annoying, try to avoid this
+- Floating points arithmetic needs some special registers/instructions which is very annoying, try to avoid this.
 - "Lacking" IDE support, i.e. debugging/documentation. See *setup local development* for my recommended setup. //TODO add link
-- And many other things that you'll find out
+- And many other things that you'll find out.

@@ -35,9 +35,12 @@ main:
 export function getChapters() {
   const chapterTitles = [
     "Prerequisites",
+    "(Optional): Local Development Setup",
     "Introduction to Assembly",
-    "Registers",
-    "Calling Conventions",
+    "Input/Output",
+    "Registers & Calling Convention",
+    "Loops & If statments",
+    "Recursion",
     "Instruction Set I",
     "Instruction Set II",
   ]

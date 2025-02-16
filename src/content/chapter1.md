@@ -1,24 +1,23 @@
-## Understanding Assembly Language
+## Local Development Setup
 
-Assembly language is a low-level programming language that provides a direct mapping to machine code instructions. Unlike high-level languages, assembly gives you precise control over the hardware but requires more detailed understanding of the computer's architecture.
+This setup will be for both VScode and debugging in the terminal. I'm on Windows 11 using WSL, but that should not matter for the VScode setup.
 
-### Key Concepts
+### Minimum steps required:
+- Install WSL --> Ubuntu (I'm on Ubuntu 22)
+- Install GCC?
 
-- **Registers**: Special storage locations in the CPU  
-- **Instructions**: Basic operations the CPU can perform  
-- **Memory**: How data is stored and accessed  
+### VScode setup:
+- Install VScode
+- Install Gcc on windows
+- Install the following [TODO: extensions](https://google.com)
+    - Debugger
+    - Syntax Highlighting
+    - (Optional) Documentation
+- Setup your debugger as follows:
 
-### Your First Assembly Program
-
-Let's look at a simple "Hello World" program in x86_64 assembly. This program demonstrates the basic structure of an assembly program and how to output text to the console.
-
-> Try modifying the code on the right to change the output message. Click "Run" to see your changes in action.
-
-### Exercise
-
-Modify the program to output your own message. Make sure to:
-
-1. Keep the basic program structure intact  
-2. Update only the string in the data section  
-3. Maintain proper string termination  
-
+### Terminal setup:
+- Once you have WSL installed, you're practically as good to go, just run the following commands:
+    ```
+        TODO: 
+    ```
+- (Recommended): Install gef for better in-terminal debugging support.
